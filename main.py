@@ -11,6 +11,12 @@ DATABASE_ID = os.getenv("DATABASE_ID")
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 CHAT_ID = os.getenv("CHAT_ID")
 
+# Debug para verificar las variables de entorno
+print(f"NOTION_SECRET: {NOTION_SECRET}")
+print(f"DATABASE_ID: {DATABASE_ID}")
+print(f"TELEGRAM_TOKEN: {TELEGRAM_TOKEN}")
+print(f"CHAT_ID: {CHAT_ID}")
+
 if not NOTION_SECRET or not DATABASE_ID:
     raise Exception("❌ Faltan las credenciales de Notion.")
 if not TELEGRAM_TOKEN or not CHAT_ID:
