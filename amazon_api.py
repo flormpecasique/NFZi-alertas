@@ -13,8 +13,9 @@ def obtener_precio_amazon(asin):
         print("Error: Credenciales de Amazon API no configuradas correctamente.")
         return None
 
+    # Cambiar 'paapi5' por 'productadvertisingapi'
     client = boto3.client(
-        'paapi5',
+        'productadvertisingapi',  # Corregido el nombre del servicio
         region_name='eu-west-1',
         aws_access_key_id=AWS_ACCESS_KEY_ID,
         aws_secret_access_key=AWS_SECRET_ACCESS_KEY
