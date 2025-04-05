@@ -1,4 +1,4 @@
-main.py: from notion_client import Client
+from notion_client import Client
 import random
 from datetime import datetime
 import requests
@@ -9,11 +9,11 @@ from dotenv import load_dotenv
 # Cargar variables del archivo .env
 load_dotenv()
 
-# Credenciales de Notion desde .env
+# Credenciales de Notion desde el entorno
 NOTION_SECRET = os.getenv("NOTION_SECRET")
 DATABASE_ID = os.getenv("DATABASE_ID")
 
-# Credenciales de Telegram desde .env
+# Credenciales de Telegram desde el entorno
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 CHAT_ID = os.getenv("CHAT_ID")
 
