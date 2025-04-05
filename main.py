@@ -59,6 +59,9 @@ def actualizar_productos():
             precio_registrado = props["Precio registrado (€)"]["number"]
             umbral = props["Umbral de alerta (%)"]["number"]
 
+            # Si el umbral está vacío, asignamos un valor por defecto de 0%
+            umbral = umbral if umbral is not None else 0
+
             asin = obtener_asin_de_url(url_producto)
             if not asin:
                 print(f"No se pudo extraer el ASIN para el producto {producto} de la URL {url_producto}")
@@ -71,10 +74,11 @@ def actualizar_productos():
             cambio = ((nuevo_precio - precio_registrado) / precio_registrado) * 100
             print(f"{producto}: {nuevo_precio}€ ({cambio:.2f}%)")
 
-            if cambio <= umbral:
-                mensaje = f"ALERTA: El precio de '{producto}' ha bajado más del {umbral}%!\n\nNuevo precio: {nuevo_precio}€"
+            # Verificar si el precio bajó más allá del umbral o si el nuevo precio es menor que el registrado
+            if cambio <= umbral or nuevo_precio < precio_registrado:
+                mensaje = f"ALERTA: El precio de '{producto}' ha bajado más del {umbral}% o ha bajado por debajo del precio registrado!\n\nNuevo precio: {nuevo_precio}€"
                 enviar_alerta_telegram(mensaje)
-                print(f"ALERTA: {producto} bajó más del umbral definido!")
+                print(f"ALERTA: {producto} bajó más del umbral definido o por debajo del precio registrado!")
 
             notion.pages.update(
                 page_id=page["id"],
