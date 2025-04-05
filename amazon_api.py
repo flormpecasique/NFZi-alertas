@@ -1,19 +1,14 @@
-import os
 from amazon_paapi import AmazonAPI
+import os
 
-# Obtén las credenciales de las variables de entorno
-AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+AWS_ACCESS_KEY = os.getenv("AWS_ACCESS_KEY_ID")
+AWS_SECRET_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
 AWS_ASSOCIATE_TAG = os.getenv("AWS_ASSOCIATE_TAG")
 
+# Inicializa AmazonAPI con las credenciales
+amazon = AmazonAPI(AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_ASSOCIATE_TAG, region="eu-west-1")
+
 def obtener_precio_amazon(asin):
-    if not AWS_ACCESS_KEY_ID or not AWS_SECRET_ACCESS_KEY or not AWS_ASSOCIATE_TAG:
-        print("Error: Credenciales de Amazon API no configuradas correctamente.")
-        return None
-
-    # Instancia de AmazonAPI usando las credenciales
-    amazon = AmazonAPI(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_ASSOCIATE_TAG, region="eu-west-1")
-
     try:
         # Usamos el método `get_items` para obtener información del producto
         items = amazon.get_items(asin)
@@ -25,7 +20,6 @@ def obtener_precio_amazon(asin):
         else:
             print(f"No se encontraron resultados para el ASIN: {asin}")
             return None
-
     except Exception as e:
         print(f"Error al obtener el precio para el ASIN {asin}: {str(e)}")
         return None
