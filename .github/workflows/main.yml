@@ -22,15 +22,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Export secrets
-        run: |
-          echo "NOTION_SECRET=${{ secrets.NOTION_SECRET }}" >> $GITHUB_ENV
-          echo "DATABASE_ID=${{ secrets.DATABASE_ID }}" >> $GITHUB_ENV
-          echo "TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }}" >> $GITHUB_ENV
-          echo "CHAT_ID=${{ secrets.CHAT_ID }}" >> $GITHUB_ENV
-          echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
-          echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
-          echo "AWS_ASSOCIATE_TAG=${{ secrets.AWS_ASSOCIATE_TAG }}" >> $GITHUB_ENV
-
-      - name: Run script
+      - name: Run script with secrets
+        env:
+          NOTION_SECRET: ${{ secrets.NOTION_SECRET }}
+          DATABASE_ID: ${{ secrets.DATABASE_ID }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_ASSOCIATE_TAG: ${{ secrets.AWS_ASSOCIATE_TAG }}
         run: python main.py
