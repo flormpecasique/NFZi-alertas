@@ -1,3 +1,4 @@
+# amazon_api.py
 from amazon_paapi import AmazonAPI
 import os
 
