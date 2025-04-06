@@ -7,7 +7,7 @@ AWS_SECRET_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
 AWS_ASSOCIATE_TAG = os.getenv("AWS_ASSOCIATE_TAG")
 
 # Inicializa AmazonAPI con las credenciales
-amazon = Amazonapi(AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_ASSOCIATE_TAG, region="eu-west-1")
+amazon = AmazonApi(AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_ASSOCIATE_TAG, region="eu-west-1")
 
 def obtener_precio_amazon(asin):
     try:
