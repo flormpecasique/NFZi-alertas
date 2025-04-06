@@ -1,5 +1,5 @@
 # amazon_api.py
-from amazon_paapi import AmazonProductAPI
+from amazon_paapi import AmazonAPI
 import os
 
 AWS_ACCESS_KEY = os.getenv("AWS_ACCESS_KEY_ID")
