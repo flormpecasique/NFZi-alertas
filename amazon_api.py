@@ -7,7 +7,7 @@ AWS_SECRET_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
 AWS_ASSOCIATE_TAG = os.getenv("AWS_ASSOCIATE_TAG")
 
 # Inicializa AmazonProductAPI con país y región
-amazon = AmazonProductAPI(
+amazon = AmazonAPI(
     AWS_ACCESS_KEY,
     AWS_SECRET_KEY,
     AWS_ASSOCIATE_TAG,
