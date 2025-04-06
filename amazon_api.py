@@ -1,6 +1,7 @@
 # amazon_api.py
 from amazon_paapi import AmazonApi
 import os
+import time  # Importamos time para poder hacer las pausas entre solicitudes
 
 AWS_ACCESS_KEY = os.getenv("AWS_ACCESS_KEY_ID")
 AWS_SECRET_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
@@ -17,6 +18,9 @@ amazon = AmazonApi(
 
 def obtener_precio_amazon(asin):
     try:
+        # Introducimos una pausa de 1 segundo entre solicitudes para evitar el límite
+        time.sleep(1)  # Pausa de 1 segundo entre solicitudes
+        
         # Obtener información del producto usando el ASIN
         items = amazon.get_items(asin)
         if items:
@@ -29,5 +33,11 @@ def obtener_precio_amazon(asin):
             print(f"No se encontraron resultados para el ASIN: {asin}")
             return None, None  # No se encontraron productos
     except Exception as e:
-        print(f"Error al obtener el precio para el ASIN {asin}: {str(e)}")
-        return None, None  # Error en la obtención de datos
+        # Si se alcanza el límite de solicitudes, esperamos y reintentamos
+        if "Requests limit reached" in str(e):
+            print(f"Error: Límite de solicitudes alcanzado. Esperando antes de intentar nuevamente...")
+            time.sleep(30)  # Espera de 30 segundos antes de reintentar
+            return obtener_precio_amazon(asin)  # Reintenta la solicitud
+        else:
+            print(f"Error al obtener el precio para el ASIN {asin}: {str(e)}")
+            return None, None  # Error en la obtención de datos
