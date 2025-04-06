@@ -73,7 +73,7 @@ def actualizar_productos():
                 print(f"No se pudo extraer el ASIN para el producto {producto} de la URL {url_producto}")
                 continue
 
-            nuevo_precio = obtener_precio_amazon(asin)
+            nuevo_precio, precio_mostrar = obtener_precio_amazon(asin)
             if nuevo_precio is None:
                 continue
 
@@ -82,7 +82,7 @@ def actualizar_productos():
 
             # Verificar si el precio bajó más allá del umbral o si el nuevo precio es menor que el registrado
             if cambio <= umbral or nuevo_precio < precio_registrado:
-                mensaje = f"ALERTA: El precio de '{producto}' ha bajado más del {umbral}% o ha bajado por debajo del precio registrado!\n\nNuevo precio: {nuevo_precio}€"
+                mensaje = f"ALERTA: El precio de '{producto}' ha bajado más del {umbral}% o ha bajado por debajo del precio registrado!\n\nNuevo precio: {precio_mostrar}"
                 enviar_alerta_telegram(mensaje)
                 print(f"ALERTA: {producto} bajó más del umbral definido o por debajo del precio registrado!")
 
